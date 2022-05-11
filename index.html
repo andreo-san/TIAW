@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parte André</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <select name="select" id="op">
+        <option value="entrada">Entrada</option>
+        <option value="saida">Saída</option>
+    </select>
+    <p>Título:</p>
+    <input type="text" id="titulo-saida">
+    <p>Valor:</p>
+    <input type="number" id="saida"><br><br>
+    <button onclick="registrar()">Confirmar</button>
+
+    <p><b>Entradas</b></p>
+    <p id="entradas-totais">
+        
+    </p>
+    <p><b>Saídas</b></p>
+    <p id="despesas-totais">
+        
+    </p>
+
+    <div id="saidas-hist">
+        <table id="tabela-despesas">
+            <tr>
+                <th>Título:</th>
+                <th>Valor:</th>
+                <th>Ações:</th>
+            </tr>
+        </table>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="https://kit.fontawesome.com/0b76ad9e3b.js" crossorigin="anonymous"></script>
+</body>
+</html>

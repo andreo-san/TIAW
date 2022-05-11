@@ -1,0 +1,19 @@
+#entrada-cor{
+    color: green;
+}
+
+#saida-cor{
+    color: red;
+}
+
+#saidas-hist{
+    height: 400px;
+    max-width: fit-content;
+    overflow-y: scroll;
+    border: solid 1px;
+}
+
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+}
