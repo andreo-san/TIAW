@@ -84,8 +84,8 @@ function registrar(){
         if(valorSaida != "" && valorTituloSaida != ""){
             historico_de_entradas.titulo.push(valorTituloSaida);
             historico_de_entradas.valor.push(valorSaida);
-            historico_geral.html_.push(`<tr id="entrada-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square"></i> <i class="fa-solid fa-trash-can"></i></td></tr>`);
-            tabelaDespesas.innerHTML += `<tr id="entrada-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square"></i> <i class="fa-solid fa-trash-can"></i></td></tr>`;
+            historico_geral.html_.push(`<tr id="entrada-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
+            tabelaDespesas.innerHTML += `<tr id="entrada-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
         }else{
             alert("Preencha todos os valores!");
         }//Registro das Saídas
@@ -93,8 +93,8 @@ function registrar(){
         if(valorSaida != "" && valorTituloSaida != ""){
             historico_de_saidas.titulo.push(valorTituloSaida);
             historico_de_saidas.valor.push(valorSaida);
-            historico_geral.html_.push(`<tr id="saida-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square"></i> <i class="fa-solid fa-trash-can"></i></td></tr>`);
-            tabelaDespesas.innerHTML += `<tr id="saida-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square"></i> <i class="fa-solid fa-trash-can"></i></td></tr>`;
+            historico_geral.html_.push(`<tr id="saida-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
+            tabelaDespesas.innerHTML += `<tr id="saida-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
         }else{
             alert("Preencha todos os valores!");
         }
@@ -105,6 +105,17 @@ function registrar(){
     window.localStorage.setItem("db_hist_geral", JSON.stringify(historico_geral));
 
     somarValores();
+
+    document.getElementById("entradas-e-saidas").style.display = "none";
+}
+
+function editar(){
+    alert("editar");
+}
+
+function deletar(del){
+    var pai = del.parentElement;
+    pai.parentElement.remove();
 }
 
 //Soma de valores
@@ -122,4 +133,8 @@ function somarValores(){
     console.log(historico_de_entradas);
     entradasTotais.innerText = somaValorEntradas;
     despesasTotais.innerText = somaValorSaidas;
+}
+
+function popup(){
+    document.getElementById("entradas-e-saidas").style.display = "block";
 }
