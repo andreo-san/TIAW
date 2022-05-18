@@ -10,6 +10,7 @@ var tituloSaida = document.getElementById("titulo-saida");
 var tabelaDespesas = document.getElementById("tabela-despesas");
 var despesasTotais = document.getElementById("despesas-totais");
 var entradasTotais = document.getElementById("entradas-totais");
+var saldoTotal = document.getElementById("saldo-total");
 
 
 //JSON de saídas e entradas
@@ -77,7 +78,6 @@ onload = function(){
 function registrar(){
     let valorSaida = saida.value;
     let valorTituloSaida = tituloSaida.value;
-    console.log(selecionarOp.value);
 
     //Registro das entradas
     if(selecionarOp.value == 'entrada'){
@@ -99,7 +99,7 @@ function registrar(){
             alert("Preencha todos os valores!");
         }
     }
-    console.log(historico_geral.html_)
+        
     window.localStorage.setItem("db_hist", JSON.stringify(historico_de_saidas));
     window.localStorage.setItem("db_hist_entradas", JSON.stringify(historico_de_entradas));
     window.localStorage.setItem("db_hist_geral", JSON.stringify(historico_geral));
@@ -122,6 +122,7 @@ function deletar(del){
 function somarValores(){
     let somaValorSaidas = 0;
     let somaValorEntradas = 0;
+    let saldoFinal = 0;
     for(i = 0; i < historico_de_saidas.valor.length; i++){
         somaValorSaidas = parseFloat(somaValorSaidas) + parseFloat(historico_de_saidas.valor[i]);
     }
@@ -129,10 +130,12 @@ function somarValores(){
     for(l = 0; l < historico_de_entradas.valor.length; l++){
         somaValorEntradas = parseFloat(somaValorEntradas) + parseFloat(historico_de_entradas.valor[l]);
     }
+        
+    saldoFinal = somaValorSaidas - somaValorEntradas;
 
-    console.log(historico_de_entradas);
     entradasTotais.innerText = somaValorEntradas;
     despesasTotais.innerText = somaValorSaidas;
+    saldoTotal.innerText = saldoFinal;
 }
 
 function popup(){
