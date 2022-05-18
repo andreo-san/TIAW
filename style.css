@@ -46,9 +46,9 @@
 #saidas-hist{
     height: 400px;
     width: 280px;
-    overflow-y: scroll;
     border-radius: 10px;
     box-shadow: 0px 6px #EDEDF6;
+    overflow-y: scroll;
     padding-top: 10px;
     font-family: sans-serif;
     font-size: 14px;
