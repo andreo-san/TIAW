@@ -131,7 +131,7 @@ function somarValores(){
         somaValorEntradas = parseFloat(somaValorEntradas) + parseFloat(historico_de_entradas.valor[l]);
     }
         
-    saldoFinal = somaValorSaidas - somaValorEntradas;
+    saldoFinal = somaValorEntradas - somaValorSaidas;
 
     entradasTotais.innerText = somaValorEntradas;
     despesasTotais.innerText = somaValorSaidas;
