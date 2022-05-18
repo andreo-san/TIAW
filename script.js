@@ -67,7 +67,7 @@ if(list_data_geral != null){
 onload = function(){
 
     for(k = 0;k < historico_geral.html_.length; k++){
-        tabelaDespesas.innerHTML += historico_geral.html_[k];
+        tabelaDespesas.insertAdjacentHTML('afterbegin', historico_geral.html_[k]);
     }
 
     somarValores();
@@ -85,7 +85,7 @@ function registrar(){
             historico_de_entradas.titulo.push(valorTituloSaida);
             historico_de_entradas.valor.push(valorSaida);
             historico_geral.html_.push(`<tr id="entrada-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
-            tabelaDespesas.innerHTML += `<tr id="entrada-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+            tabelaDespesas.insertAdjacentHTML('afterbegin', `<tr id="entrada-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
         }else{
             alert("Preencha todos os valores!");
         }//Registro das Saídas
@@ -94,7 +94,7 @@ function registrar(){
             historico_de_saidas.titulo.push(valorTituloSaida);
             historico_de_saidas.valor.push(valorSaida);
             historico_geral.html_.push(`<tr id="saida-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
-            tabelaDespesas.innerHTML += `<tr id="saida-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+            tabelaDespesas.insertAdjacentHTML('afterbegin', `<tr id="saida-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
         }else{
             alert("Preencha todos os valores!");
         }
