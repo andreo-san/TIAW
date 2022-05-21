@@ -15,16 +15,19 @@ var saldoTotal = document.getElementById("saldo-total");
 
 //JSON de saídas e entradas
 var historico_de_saidas = {
-        titulo : [],
-        valor : []
+    id:[],
+    titulo : [],
+    valor : []
 }
 
 var historico_de_entradas = {
+    id:[],
     titulo : [],
     valor : []
 }
 
 var historico_geral = {
+    id:[],
     html_ : []
 }
 
@@ -62,6 +65,10 @@ if(list_data_geral != null){
     for (var i of list_data_geral.html_) {
         historico_geral.html_.push(i);
     }
+
+    for (var i of list_data_geral.id) {
+        historico_geral.id.push(i);
+    }
 }
 
 //Inserir os valores na tabela ao carregar a página
@@ -84,8 +91,11 @@ function registrar(){
         if(valorSaida != "" && valorTituloSaida != ""){
             historico_de_entradas.titulo.push(valorTituloSaida);
             historico_de_entradas.valor.push(valorSaida);
-            historico_geral.html_.push(`<tr id="entrada-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
-            tabelaDespesas.insertAdjacentHTML('afterbegin', `<tr id="entrada-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
+            let index = generateId();
+            historico_de_entradas.id.push(index);
+            historico_geral.id.push(index);
+            historico_geral.html_.push(`<tr class="entrada-cor" id="${index}"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
+            tabelaDespesas.insertAdjacentHTML('afterbegin', `<tr class="entrada-cor" id="${index}"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
         }else{
             alert("Preencha todos os valores!");
         }//Registro das Saídas
@@ -93,29 +103,54 @@ function registrar(){
         if(valorSaida != "" && valorTituloSaida != ""){
             historico_de_saidas.titulo.push(valorTituloSaida);
             historico_de_saidas.valor.push(valorSaida);
-            historico_geral.html_.push(`<tr id="saida-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
-            tabelaDespesas.insertAdjacentHTML('afterbegin', `<tr id="saida-cor"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar()"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
+            let index = generateId();
+            historico_de_saidas.id.push(index);
+            historico_geral.id.push(index);
+            historico_geral.html_.push(`<tr class="saida-cor" id="${index}"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
+            tabelaDespesas.insertAdjacentHTML('afterbegin', `<tr class="saida-cor" id="${index}"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
         }else{
             alert("Preencha todos os valores!");
         }
     }
-        
-    window.localStorage.setItem("db_hist", JSON.stringify(historico_de_saidas));
-    window.localStorage.setItem("db_hist_entradas", JSON.stringify(historico_de_entradas));
-    window.localStorage.setItem("db_hist_geral", JSON.stringify(historico_geral));
+    
+    salvarLocal();
 
     somarValores();
 
     document.getElementById("entradas-e-saidas").style.display = "none";
 }
 
-function editar(){
-    alert("editar");
-}
-
 function deletar(del){
-    var pai = del.parentElement;
-    pai.parentElement.remove();
+
+    let delPai = del.parentElement;
+    let delVo = delPai.parentElement;
+
+
+    let deletarGeral = historico_geral.id.indexOf(parseFloat(delVo.id));
+    let deletarEntrada = historico_de_entradas.id.indexOf(parseFloat(delVo.id));
+    let deletarSaida = historico_de_saidas.id.indexOf(parseFloat(delVo.id));
+
+
+    if(delVo.className == "entrada-cor"){
+        historico_de_entradas.id.splice(deletarEntrada, 1);
+        historico_de_entradas.titulo.splice(deletarEntrada, 1);
+        historico_de_entradas.valor.splice(deletarEntrada, 1);
+    }else if(delVo.className == "saida-cor"){
+        historico_de_saidas.id.splice(deletarSaida, 1);
+        historico_de_saidas.titulo.splice(deletarSaida, 1);
+        historico_de_saidas.valor.splice(deletarSaida, 1);
+    }
+
+    historico_geral.html_.splice(deletarGeral, 1);
+    list_data_geral.html_.splice(deletarGeral, 1);
+
+    historico_geral.id.splice(deletarGeral, 1);
+    list_data_geral.id.splice(deletarGeral, 1);
+
+    delVo.remove();
+
+    salvarLocal();
+    somarValores();
 }
 
 //Soma de valores
@@ -138,6 +173,16 @@ function somarValores(){
     saldoTotal.innerText = saldoFinal;
 }
 
+function generateId(){
+    return Math.random() * 100 * Date.now();
+}
+
 function popup(){
     document.getElementById("entradas-e-saidas").style.display = "block";
+}
+
+function salvarLocal(){
+    window.localStorage.setItem("db_hist", JSON.stringify(historico_de_saidas));
+    window.localStorage.setItem("db_hist_entradas", JSON.stringify(historico_de_entradas));
+    window.localStorage.setItem("db_hist_geral", JSON.stringify(historico_geral));
 }
