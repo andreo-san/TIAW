@@ -1,5 +1,27 @@
-#entrada-cor{
+body{
+    background-color: #F8F8FB;
+}
+
+.entrada-cor{
     color: green;
+}
+
+.saida-cor{
+    color: red;
+}
+
+#entradas-e-saidas-edt{
+    position: absolute;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px #c9c9d1;
+    margin-top: 10px;
+    padding: 15px;
+    font-family: sans-serif;
+}
+
+#op-edit{
+    width: 100%;
 }
 
 #flex{
@@ -39,15 +61,12 @@
     width: 100%;
 }
 
-#saida-cor{
-    color: red;
-}
-
 #saidas-hist{
     height: 400px;
     width: 280px;
     border-radius: 10px;
     box-shadow: 0px 6px #EDEDF6;
+    background-color: white;
     overflow-y: scroll;
     padding-top: 10px;
     font-family: sans-serif;
@@ -86,7 +105,33 @@ table{
 #inputs{
     font-family: sans-serif;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     width: 300px;
     text-align: center;
+}
+
+#inputs .cards{
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0px 6px #EDEDF6;
+    background-color: white;
+    padding-top: 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    align-items: center;
+}
+
+.icone{
+    background-color: #F8F5FD;
+    border-radius: 100%;
+    font-size: 35px;
+    width: 70px;
+    height: 70px;
+    align-items: center;
+    display: grid;
 }
