@@ -135,3 +135,14 @@ table{
     align-items: center;
     display: grid;
 }
+
+#graph{
+    width: 250px;
+    height: 400px;
+}
+
+#dados{
+    display: grid;
+    grid-template-columns: 20% 30%;
+    align-items: center;
+}
