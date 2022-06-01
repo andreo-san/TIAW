@@ -120,6 +120,49 @@ function registrar(){
     document.getElementById("entradas-e-saidas").style.display = "none";
 }
 
+function editar(edt){
+    let edtPai = edt.parentElement;
+    let edtVo = edtPai.parentElement;
+
+
+    document.getElementById("bttn1").insertAdjacentHTML('afterend',`
+        <div id="entradas-e-saidas-edt">
+            <select name="select" id="op">
+                <option value="entrada">Entrada</option>
+                <option value="saida">Saída</option>
+            </select>
+            <p>Título:</p>
+            <select id="titulo-saida">
+                <option value="Assinaturas">Assinaturas e serviços</option>
+                <option value="Casa">Casa</option>
+                <option value="Compras">Compras</option>
+                <option value="Dívidas">Dívidas e empréstimos</option>
+                <option value="Educação">Educação</option>
+                <option value="Família">Família e filhos</option>
+                <option value="Saúde">Saúde</option>
+                <option value="Mercado">Mercado</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Investimento">Investimento</option>
+                <option value="Impostos">Impostos</option>
+                <option value="Outros">Outros</option>
+            </select>
+            <p>Valor:</p>
+            <input type="number" id="saida"><br><br>
+            <button onclick="mostrarId(${edtVo.id})">Confirmar</button>
+        </div>
+    `)
+}
+
+function mostrarId(idm){
+    let editarGeral = historico_geral.id.indexOf(parseFloat(idm));
+    let editarEntrada = historico_de_entradas.id.indexOf(parseFloat(idm));
+    let editarSaida = historico_de_saidas.id.indexOf(parseFloat(idm));
+
+    
+
+    document.getElementById("entradas-e-saidas-edt").style.display = "none";
+}
+
 function deletar(del){
 
     let delPai = del.parentElement;
