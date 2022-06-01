@@ -124,15 +124,16 @@ function editar(edt){
     let edtPai = edt.parentElement;
     let edtVo = edtPai.parentElement;
 
+    console.log(edtVo);
 
     document.getElementById("bttn1").insertAdjacentHTML('afterend',`
         <div id="entradas-e-saidas-edt">
-            <select name="select" id="op">
+            <select name="select" id="op-edt">
                 <option value="entrada">Entrada</option>
                 <option value="saida">Saída</option>
             </select>
             <p>Título:</p>
-            <select id="titulo-saida">
+            <select id="titulo-saida-edt">
                 <option value="Assinaturas">Assinaturas e serviços</option>
                 <option value="Casa">Casa</option>
                 <option value="Compras">Compras</option>
@@ -147,20 +148,31 @@ function editar(edt){
                 <option value="Outros">Outros</option>
             </select>
             <p>Valor:</p>
-            <input type="number" id="saida"><br><br>
+            <input type="number" id="saida-edt"><br><br>
             <button onclick="mostrarId(${edtVo.id})">Confirmar</button>
         </div>
     `)
 }
 
 function mostrarId(idm){
-    let editarGeral = historico_geral.id.indexOf(parseFloat(idm));
-    let editarEntrada = historico_de_entradas.id.indexOf(parseFloat(idm));
-    let editarSaida = historico_de_saidas.id.indexOf(parseFloat(idm));
 
-    
+    let opedt = document.getElementById("op-edt").value;
+    let tituloEdt = document.getElementById("titulo-saida-edt").value;
+    let saidaEdt = document.getElementById("saida-edt").value;
+
+    let editarGeral = historico_geral.id.indexOf(parseFloat(idm));
+
+    document.getElementById(idm).innerHTML = `<tr class="saida-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+
+    historico_geral.id[idm] = idm;
+    historico_geral.html_[idm] = `<tr class="saida-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+
+    console.log(editarGeral);
 
     document.getElementById("entradas-e-saidas-edt").style.display = "none";
+
+    salvarLocal();
+    somarValores();
 }
 
 function deletar(del){
