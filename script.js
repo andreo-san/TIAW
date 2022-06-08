@@ -82,7 +82,7 @@ onload = function(){
 }
 
 //Registrar novos valores de entradas e saídas
-function registrar(){
+function registrar(chart){
     let valorSaida = saida.value;
     let valorTituloSaida = tituloSaida.value;
 
@@ -96,6 +96,7 @@ function registrar(){
             historico_geral.id.push(index);
             historico_geral.html_.push(`<tr class="entrada-cor" id="${index}"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
             tabelaDespesas.insertAdjacentHTML('afterbegin', `<tr class="entrada-cor" id="${index}"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
+            addData(myChart, valorTituloSaida, valorSaida);
         }else{
             alert("Preencha todos os valores!");
         }//Registro das Saídas
@@ -108,6 +109,7 @@ function registrar(){
             historico_geral.id.push(index);
             historico_geral.html_.push(`<tr class="saida-cor" id="${index}"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
             tabelaDespesas.insertAdjacentHTML('afterbegin', `<tr class="saida-cor" id="${index}"><td>${valorTituloSaida}</td><td>R$${valorSaida}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`);
+            addData(myChart, valorTituloSaida, valorSaida);
         }else{
             alert("Preencha todos os valores!");
         }
@@ -166,6 +168,9 @@ function mostrarId(idm){
 
     historico_geral.id[idm] = idm;
     historico_geral.html_[idm] = `<tr class="saida-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+
+    list_data_geral.id[idm] = idm;
+    list_data_geral.html_[idm] = `<tr class="saida-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
 
     console.log(editarGeral);
 
@@ -242,19 +247,42 @@ function salvarLocal(){
     window.localStorage.setItem("db_hist_geral", JSON.stringify(historico_geral));
 }
 
+function addData(chart, label, data) {
+
+    let controle = 0;
+
+    for(i=0; i<myChart.data.labels.length; i++){
+        if(myChart.data.labels[i] == label){
+            controle = 1;
+        }
+    }
+    if(controle == 0){
+        myChart.data.labels.push(label);
+        myChart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+    }else if(controle == 1){
+        var indexVar = myChart.data.labels.indexOf(label);
+        console.log(indexVar);
+        var num = myChart.data.datasets[0].data[indexVar]
+        data = parseFloat(num)+parseFloat(data);
+        myChart.data.datasets.forEach((dataset) => {
+            dataset.data[indexVar] = data;
+        });
+    }
+    chart.update();
+}
+
 const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: [
-                'Assinaturas',
-                'Casa',
-                'Compras',
-                'Dívidas'
+                
               ],
               datasets: [{
                 label: 'My First Dataset',
-                data: [300, 50, 100],
+                data: [],
                 backgroundColor: [
                   'rgb(255, 99, 132)',
                   'rgb(54, 162, 235)',
