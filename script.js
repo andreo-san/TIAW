@@ -158,23 +158,43 @@ function editar(edt){
 
 function mostrarId(idm){
 
-    let opedt = document.getElementById("op-edt").value;
+    let opEdt = document.getElementById("op-edt").value;
     let tituloEdt = document.getElementById("titulo-saida-edt").value;
     let saidaEdt = document.getElementById("saida-edt").value;
 
     let editarGeral = historico_geral.id.indexOf(parseFloat(idm));
 
-    document.getElementById(idm).innerHTML = `<tr class="saida-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
 
-    historico_geral.id[idm] = idm;
-    historico_geral.html_[idm] = `<tr class="saida-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+    if(opEdt == "entrada"){
+        document.getElementById("entradas-e-saidas-edt").style.display = "none";
+        historico_de_entradas.id[editarGeral] = idm;
+        historico_de_entradas.titulo[editarGeral] = tituloEdt;
+        historico_de_entradas.valor[editarGeral] = saidaEdt;
 
-    list_data_geral.id[idm] = idm;
-    list_data_geral.html_[idm] = `<tr class="saida-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+        historico_de_saidas.valor.splice(editarGeral, 1);
+
+        document.getElementById(idm).parentElement.innerHTML = `<tr class="entrada-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+        historico_geral.html_[editarGeral] = `<tr class="entrada-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+        list_data_geral.html_[editarGeral] = `<tr class="entrada-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+    }else if(opEdt == "saida"){
+        document.getElementById("entradas-e-saidas-edt").style.display = "none";
+        historico_de_saidas.id[editarGeral] = idm;
+        historico_de_saidas.titulo[editarGeral] = tituloEdt;
+        historico_de_saidas.valor[editarGeral] = saidaEdt;
+
+        historico_de_entradas.valor.splice(editarGeral, 1);
+
+        document.getElementById(idm).parentElement.innerHTML = `<tr class="saida-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+        historico_geral.html_[editarGeral] = `<tr class="saida-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+        list_data_geral.html_[editarGeral] = `<tr class="saida-cor" id="${idm}"><td>${tituloEdt}</td><td>R$${saidaEdt}</td><td><i class="fa-solid fa-pen-to-square" onclick="editar(this)"></i> <i class="fa-solid fa-trash-can" onclick="deletar(this)"></i></td></tr>`;
+    }
+
+    historico_geral.id[editarGeral] = idm;
+    list_data_geral.id[editarGeral] = idm;
+    
 
     console.log(editarGeral);
 
-    document.getElementById("entradas-e-saidas-edt").style.display = "none";
 
     salvarLocal();
     somarValores();
